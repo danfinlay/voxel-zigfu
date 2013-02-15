@@ -10,3 +10,4 @@ Presently the API is very simple.  Just pass voxel-zigfu a minecraft-skin of you
 
 	var zigfu = require('voxel-zigfu')
 	zigfu.puppeteer(viking)
+Please note you will need to include the Zigfu source in your HTML page, and you will need their extension installed in your browser.  You can get that at [zigfu.com](http://zigfu.com/).
