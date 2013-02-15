@@ -1,5 +1,6 @@
 {
   "name": "voxel-zigfu",
+  "description":"Use Kinect to puppetteer a Voxel.js Avatar.",
   "version": "0.0.2",
   "dependencies": {
     "voxel-engine": "0.5.3",
