@@ -73,14 +73,14 @@ var render = function () {
 	else if(mouseY < -500) {
 		mouseY = -500;
 	}
+
+	renderer.render(scene, camera);
+};
+
 	camera.position.x = -Math.cos(rad/(cw/2)+(Math.PI/0.9));
 	camera.position.z = -Math.sin(rad/(cw/2)+(Math.PI/0.9));
 	camera.position.y = (mouseY/(ch/2))*1.5+0.2;
 	camera.position.setLength(70);
 	camera.lookAt(new THREE.Vector3(0, 1.5, 0));
-
-	renderer.render(scene, camera);
-};
-
 render()
 

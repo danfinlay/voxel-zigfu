@@ -1,9 +1,9 @@
 {
   "name": "voxel-zigfu",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "voxel-engine": "0.5.3",
     "painterly-textures": "0.0.3",
-    "minecraft-skin": "0.0.2"
+    "minecraft-skin": "0.0.4"
   }
 }
