@@ -1,7 +1,15 @@
-An experiment to pupeteer a voxel person with an OpenNI/NITE-enabled depth sensor (like the Xbox Kinect).
+#Voxel-Zigfu#
+##A module to pupeteer a voxel person with an OpenNI/NITE-enabled depth sensor (like the Xbox Kinect).##
 
-Right now I'm wrapping my head around the kinematics to make this work right.
+Presently the API is very simple.  Just pass voxel-zigfu a minecraft-skin of your choice, and voxel-zigfu will take care of the puppeteering the limbs as you move in front of your OpenNI-enabled depth sensor of choice.  Designed for use with Voxel.js.  Here it is, tacked on to the end of the minecraft-skin sample code:
 
-I am now aware this problem can be solved using Quaternions, which Three.js has a library to deal with.  I am in the process of digesting and implementing this material now.
+``
+var skin = require('minecraft-skin')
+var viking = skin(THREE, 'viking.png')
+viking.mesh.position.y = 50
+scene.add(viking.mesh)
 
-A live demo, featuring the right arm active with the current problem is [here](http://danfinlay.com/projects/voxeljs/zigfu/).
+var zigfu = require('voxel-zigfu')
+zigfu.puppeteer(viking)
+
+``
