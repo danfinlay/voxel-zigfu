@@ -1,7 +1,8 @@
 {
   "name": "voxel-zigfu",
-  "description":"Use Kinect to puppetteer a Voxel.js Avatar.",
+  "description":"Use Kinect to puppeteer a Voxel.js Avatar.",
   "version": "0.0.2",
+  "repository":"https://github.com/flyswatter/voxel-zigfu",
   "dependencies": {
     "voxel-engine": "0.5.3",
     "painterly-textures": "0.0.3",
