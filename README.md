@@ -3,6 +3,7 @@
 ![Screenshot](screenshot.jpg)
 
 Presently the API is very simple.  Just pass voxel-zigfu a minecraft-skin of your choice, and voxel-zigfu will take care of the puppeteering the limbs as you move in front of your OpenNI-enabled depth sensor of choice.  Designed for use with [Voxel.js](www.voxeljs.com).  Here it is, tacked on to the end of the minecraft-skin sample code:
+[Run working example](http://danfinlay.com/projects/voxeljs/zigfu)
 
 	var skin = require('minecraft-skin')
 	var viking = skin(THREE, 'viking.png')
@@ -11,6 +12,7 @@ Presently the API is very simple.  Just pass voxel-zigfu a minecraft-skin of you
 
 	var zigfu = require('voxel-zigfu')
 	zigfu.puppeteer(viking)
+
 Please note you will need to include the Zigfu source in your HTML page, and you will need their extension installed in your browser.  You can get that at [zigfu.com](http://zigfu.com/).
 
 You can run a demo of the module using browserify and http-server.  First make sure you have them both installed like so:

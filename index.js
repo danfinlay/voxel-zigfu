@@ -22,6 +22,7 @@ exports.puppeteer = function(skin){
 				leftLeg(skin, user.skeleton)
 				head(skin, user.skeleton)
 				torso(skin, user.skeleton)
+				body(skin, user.skeleton)
 			}
 		});
 	});

@@ -1,6 +1,6 @@
 {
   "name": "voxel-zigfu",
-  "description":"Use Kinect to puppeteer a Voxel.js Avatar.",
+  "description":"Use Kinect to puppeteer a Voxel.js avatar.",
   "version": "0.0.2",
   "repository":{
   	"type":"git",
@@ -10,5 +10,10 @@
     "voxel-engine": "0.5.3",
     "painterly-textures": "0.0.3",
     "minecraft-skin": "0.0.4"
+  },
+  "author":{
+  	"name":"Dan Finlay",
+  	"email":"dan@danfinlay.com",
+  	"url":"http://danfinlay.com"
   }
 }
