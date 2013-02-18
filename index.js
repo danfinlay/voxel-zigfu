@@ -9,6 +9,7 @@ var position = {
 	playerModel:[]
 }
 var active = true
+var updateCallback = function(){}
 
 exports.currentPosition = function(){
 	return position
@@ -16,6 +17,9 @@ exports.currentPosition = function(){
 
 exports.setActive = function(shouldBeActive){
 	active = shouldBeActive
+}
+exports.onUpdate = function(cb){
+	updateCallback = cb
 }
 
 exports.puppeteer = function(skin){
@@ -34,6 +38,7 @@ exports.puppeteer = function(skin){
 				logged = true
 			}
 			if(user.skeletonTracked && active){
+				console.log("Tracked & Active")
 				rightArm(skin, user.skeleton)
 				leftArm(skin, user.skeleton)
 				rightLeg(skin, user.skeleton)
@@ -41,6 +46,8 @@ exports.puppeteer = function(skin){
 				head(skin, user.skeleton)
 				torso(skin, user.skeleton)
 				//body(skin, user.skeleton)
+
+				updateCallback()
 			}
 		});
 	});
@@ -51,7 +58,7 @@ exports.puppeteer = function(skin){
 }
 
 function rightArm(skin, skeleton){
-	skin.rightArm.eulerOrder = "xyz"
+	skin.rightArm.eulerOrder = "XYZ"
 	skin.rightArm.useQuaternion = true
 
 	var base = helper.vector3FromPoints(skeleton[zig.Joint.RightShoulder].position, skeleton[zig.Joint.RightHip].position)
@@ -64,7 +71,7 @@ function rightArm(skin, skeleton){
 }
 
 function leftArm(skin, skeleton){
-	skin.leftArm.eulerOrder = "xyz"
+	skin.leftArm.eulerOrder = "XYZ"
 	skin.leftArm.useQuaternion = true
 
 	var base = helper.vector3FromPoints(skeleton[zig.Joint.LeftShoulder].position, skeleton[zig.Joint.LeftHip].position)
@@ -91,7 +98,7 @@ function head(skin, skeleton){
 	position.head = [cross, Math.PI-angle]
 }
 function torso(skin, skeleton){
-	skin.upperBody.eulerOrder = "ZYX"
+	skin.upperBody.eulerOrder = "YZX"
 	skin.upperBody.useQuaternion = true
 
 	var leftHip = skeleton[zig.Joint.LeftHip].position
@@ -108,11 +115,11 @@ function torso(skin, skeleton){
 
 	position.body = [cross, Math.PI-angle]
 
-	skin.playerModel.useQuaternion = true
-	skin.playerModel.eulerOrder = "ZYX"
-	skin.playerModel.quaternion.setFromAxisAngle(cross, (Math.PI-angle))
+	// skin.playerModel.useQuaternion = true
+	// skin.playerModel.eulerOrder = "ZYX"
+	// skin.playerModel.quaternion.setFromAxisAngle(cross, (Math.PI-angle))
 
-	position.playerModel = [cross, Math.PI-angle]
+	// position.playerModel = [cross, Math.PI-angle]
 
 	//Rotate whole body in correct direction.
 	//This is glitchy so I'm leaving it out for now.
@@ -121,7 +128,7 @@ function torso(skin, skeleton){
 	// skin.playerGroup.rotation.y = theta+1
 }
 function rightLeg(skin, skeleton){
-	skin.rightLeg.eulerOrder = "xyz"
+	skin.rightLeg.eulerOrder = "XYZ"
 	skin.rightLeg.useQuaternion = true
 
 	var base = helper.vector3FromPoints(skeleton[zig.Joint.RightShoulder].position, skeleton[zig.Joint.RightHip].position)
@@ -133,7 +140,7 @@ function rightLeg(skin, skeleton){
 	position.rightLeg = [cross, Math.PI-angle]
 }
 function leftLeg(skin, skeleton){
-	skin.leftLeg.eulerOrder = "xyz"
+	skin.leftLeg.eulerOrder = "XYZ"
 	skin.leftLeg.useQuaternion = true
 
 	var base = helper.vector3FromPoints(skeleton[zig.Joint.LeftShoulder].position, skeleton[zig.Joint.LeftHip].position)
@@ -143,24 +150,4 @@ function leftLeg(skin, skeleton){
 	var cross = helper.normalize3(base.cross(limb))
 	skin.leftLeg.quaternion.setFromAxisAngle(cross, Math.PI-angle)
 	position.leftLeg = [cross, Math.PI-angle]
-}
-function body(skin, skeleton){
-	var hip1 = skeleton[zig.Joint.LeftHip].position
-	var hip2 = skeleton[zig.Joint.RightHip].position
-	var waist = helper.averagePoints(skeleton[zig.Joint.LeftHip].position, skeleton[zig.Joint.RightHip].position)
-	
-	//var newPosition = [waist.x+500, waist.y-46, waist.z-800]
-
-	//console.log("Moving player to "+JSON.stringify(waist))
-	//skin.playerGroup.position = newPosition
-	
-	skin.leftLeg.eulerOrder = "xyz"
-	skin.leftLeg.useQuaternion = true
-
-	var base = helper.vector3FromPoints(skeleton[zig.Joint.LeftShoulder].position, skeleton[zig.Joint.LeftHip].position)
-	var limb = helper.vector3FromPoints(skeleton[zig.Joint.LeftFoot].position, skeleton[zig.Joint.LeftHip].position)
-	
-	var angle = helper.angleBetweenVectors(limb,base)
-	var cross = helper.normalize3(base.cross(limb))
-	skin.leftLeg.quaternion.setFromAxisAngle(cross, Math.PI-angle)
 }
