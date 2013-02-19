@@ -5,8 +5,8 @@ var position = {
 	leftLeg:[],
 	rightLeg:[],
 	head:[],
-	body:[],
-	playerModel:[]
+	upperBody:[],
+	playerGroup:[]
 }
 var active = true
 var updateCallback = function(){}
@@ -38,7 +38,7 @@ exports.puppeteer = function(skin){
 				logged = true
 			}
 			if(user.skeletonTracked && active){
-				console.log("Tracked & Active")
+				//console.log("Tracked & Active")
 				rightArm(skin, user.skeleton)
 				leftArm(skin, user.skeleton)
 				rightLeg(skin, user.skeleton)
@@ -95,11 +95,13 @@ function head(skin, skeleton){
 	var angle = helper.angleBetweenVectors(limb,base)
 	var cross = helper.normalize3(base.cross(limb))
 	skin.head.quaternion.setFromAxisAngle(cross, -(angle))
-	position.head = [cross, Math.PI-angle]
+	position.head = [cross, -angle]
 }
 function torso(skin, skeleton){
 	skin.upperBody.eulerOrder = "YZX"
 	skin.upperBody.useQuaternion = true
+	skin.playerGroup.eulerOrder = "YZX"
+	skin.playerGroup.useQuaternion = true
 
 	var leftHip = skeleton[zig.Joint.LeftHip].position
 	var rightHip = skeleton[zig.Joint.RightHip].position
@@ -112,20 +114,20 @@ function torso(skin, skeleton){
 	var cross = helper.normalize3(base.cross(limb))
 	//console.log("Torso axis: "+JSON.stringify(cross,null,'\t')+" and angle: "+angle)
 	skin.upperBody.quaternion.setFromAxisAngle(cross, Math.PI-angle)
-
-	position.body = [cross, Math.PI-angle]
+	position.upperBody = [cross, Math.PI-angle]
+	//position.body = [cross, Math.PI-angle]
 
 	// skin.playerModel.useQuaternion = true
 	// skin.playerModel.eulerOrder = "ZYX"
 	// skin.playerModel.quaternion.setFromAxisAngle(cross, (Math.PI-angle))
 
-	// position.playerModel = [cross, Math.PI-angle]
 
 	//Rotate whole body in correct direction.
 	//This is glitchy so I'm leaving it out for now.
 	// var hipFacing = [leftHip[0]-rightHip[0], leftHip[1]-rightHip[1]]
 	// var theta = Math.atan2(hipFacing[0], hipFacing[1]);
-	// skin.playerGroup.rotation.y = theta+1
+	skin.playerGroup.quaternion.setFromAxisAngle(cross, (Math.PI-angle))
+	position.playerGroup = [cross, (Math.PI-angle)]
 }
 function rightLeg(skin, skeleton){
 	skin.rightLeg.eulerOrder = "XYZ"
